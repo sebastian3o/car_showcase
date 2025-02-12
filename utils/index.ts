@@ -1,9 +1,16 @@
 import { cars } from "@/constants";
-import { CarProps } from "@/types";
+import { CarProps, FilterProps } from "@/types";
 
-export async function fetchCars()
+export async function fetchCars(filters:FilterProps)
 {
-return cars
+	const{manufacturer,year,fuel,limit,model}=filters;
+return cars.filter(car => 
+        (!manufacturer || car.make.toLowerCase() === manufacturer.toLowerCase()) &&
+        (!year || car.year === year) &&
+        (!fuel || car.fuel_type.toLowerCase() === fuel.toLowerCase()) &&
+        (!model || car.model.toLowerCase().includes(model.toLowerCase()))
+    ).slice(0, limit || cars.length);
+
 }
 
 export const calculateCarRent = (city_mpg: number, year: number) => {
