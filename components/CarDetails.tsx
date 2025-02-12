@@ -50,20 +50,9 @@ const CarDetails = ({isOpen,closeModal,car}: CarDetailsProps) => {
             </button>
             <div className="flex-1 flex flex-col gap-3">
               <div className='relative w-full h-40 bg-pattern bg-cover bg-center rounded-lg' >
-                <Image src="/hero.png"  alt='car model' fill priority className='object-contain'></Image>
+                <Image src={"/"+car.year+"_"+car.make+"_"+car.model+".png"}  alt='car model' fill priority className='object-contain'></Image>
               </div>
-              <div className='flex gap-3'>
-                <div className='flex-1 relative w-full h-24 bg-primary-blue-100 rounded-lg'>
-                <Image src="/hero.png"  alt='car model' fill priority className='object-contain'></Image>
-                </div>
-                <div className='flex-1 relative w-full h-24 bg-primary-blue-100 rounded-lg'>
-                <Image src="/hero.png"  alt='car model' fill priority className='object-contain'></Image>
-                </div>
-                <div className='flex-1 relative w-full h-24 bg-primary-blue-100 rounded-lg'>
-                <Image src="/hero.png"  alt='car model' fill priority className='object-contain'></Image>
-                </div>
-
-              </div>
+            
             </div>
             <div className="flex-1 flex flex-col gap-2">
               <h2 className='font-semibold text-xl capitalize'>

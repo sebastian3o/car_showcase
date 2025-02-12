@@ -1,0 +1,72 @@
+import os
+import requests
+from duckduckgo_search import DDGS
+
+def search_car_images(make, model, year, max_results=3):
+    query = f"{year} {make} {model} car"
+    with DDGS() as ddgs:
+        return [result['image'] for result in ddgs.images(query, max_results=max_results)]
+
+def download_image(url, filename):
+    response = requests.get(url, stream=True)
+    if response.status_code == 200:
+        with open(filename, 'wb') as file:
+            for chunk in response.iter_content(1024):
+                file.write(chunk)
+        print(f"Saved: {filename}")
+        return True
+    else:
+        print(f"Failed to download: {url}")
+        return False
+
+def fetch_and_save_car_images(cars, output_dir="car_images"):
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+    
+    for car in cars:
+        make, model, year = car['make'], car['model'], car['year']
+        image_urls = search_car_images(make, model, year)
+        
+        for image_url in image_urls:
+            filename = os.path.join(output_dir, f"{year}_{make}_{model}.png")
+            if download_image(image_url, filename):
+                break
+        else:
+            print(f"No valid image found for {year} {make} {model}")
+
+
+cars = [
+    {"make": "toyota", "model": "camry", "year": 1993},
+    {"make": "toyota", "model": "corolla", "year": 1998},
+    {"make": "toyota", "model": "rav4", "year": 2002},
+    {"make": "toyota", "model": "tacoma", "year": 2000},
+    {"make": "toyota", "model": "prius", "year": 2005},
+    {"make": "honda", "model": "civic", "year": 2003},
+    {"make": "honda", "model": "accord", "year": 2001},
+    {"make": "honda", "model": "crv", "year": 2004},
+    {"make": "honda", "model": "odyssey", "year": 1999},
+    {"make": "honda", "model": "pilot", "year": 2005},
+    {"make": "ford", "model": "focus", "year": 2004},
+    {"make": "ford", "model": "fusion", "year": 2003},
+    {"make": "ford", "model": "explorer", "year": 2002},
+    {"make": "ford", "model": "f-150", "year": 2001},
+    {"make": "ford", "model": "mustang", "year": 2000},
+    {"make": "chevrolet", "model": "cruze", "year": 2005},
+    {"make": "chevrolet", "model": "malibu", "year": 2004},
+    {"make": "chevrolet", "model": "equinox", "year": 2006},
+    {"make": "chevrolet", "model": "silverado", "year": 2003},
+    {"make": "chevrolet", "model": "corvette", "year": 2001},
+    {"make": "nissan", "model": "sentra", "year": 2007},
+    {"make": "nissan", "model": "altima", "year": 2006},
+    {"make": "nissan", "model": "rogue", "year": 2008},
+    {"make": "nissan", "model": "titan", "year": 2005},
+    {"make": "nissan", "model": "370z", "year": 2009},
+    {"make": "bmw", "model": "3 series", "year": 2007},
+    {"make": "bmw", "model": "5 series", "year": 2009},
+    {"make": "bmw", "model": "x3", "year": 2010},
+    {"make": "bmw", "model": "x5", "year": 2008},
+    {"make": "bmw", "model": "z4", "year": 2011}
+]
+
+fetch_and_save_car_images(cars)
+print("done")

@@ -14,7 +14,7 @@ const CarCard = ({car}:CarCardProps) => {
     const {city_mpg,year,make,model,transmission,drive}=car;
     const [isOpen, setisOpen] = useState(false)
     const carRent=calculateCarRent(city_mpg,year);
-    
+    const carImageSrc=`/${year}_${make}_${model}.png`
     return (
     <div className='car-card group'>
         <div className='car-card__content'>
@@ -33,7 +33,7 @@ const CarCard = ({car}:CarCardProps) => {
         </p>
 
         <div className='relative w-full h-40 my-3 object-contain'>
-        <Image src="/hero.png"  alt='car model' fill priority className='object-contain'></Image>
+        <Image src={carImageSrc}  alt='car model' fill priority className='object-contain'></Image>
         </div>
 
         <div className='relative flex w-full mt-2'>
