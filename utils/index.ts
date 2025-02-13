@@ -6,8 +6,8 @@ export async function fetchCars(filters:FilterProps)
 	const{manufacturer,year,fuel,limit,model}=filters;
 return cars.filter(car => 
         (!manufacturer || car.make.toLowerCase() === manufacturer.toLowerCase()) &&
-        (!year || car.year === year) &&
-        (!fuel || car.fuel_type.toLowerCase() === fuel.toLowerCase()) &&
+        (!year || car.year == year) &&
+        (fuel === "fuel"||!fuel || car.fuel_type.toLowerCase() === fuel.toLowerCase()) &&
         (!model || car.model.toLowerCase().includes(model.toLowerCase()))
     ).slice(0, limit || cars.length);
 
@@ -27,6 +27,11 @@ export const calculateCarRent = (city_mpg: number, year: number) => {
 	return rentalRatePerDay.toFixed(0);
   };
 
-  export const generateCarImageUrl=(car:CarProps,angle?:string)=>{
-	
+  
+  export const updateSearchParams = (type: string, value: string) => {
+    const searchParams = new URLSearchParams(window.location.search);
+    searchParams.set(type, value);
+   
+    const newPathname = `${window.location.pathname}?${searchParams.toString()}`;
+    return newPathname
   }
