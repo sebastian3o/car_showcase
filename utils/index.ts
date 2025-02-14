@@ -9,7 +9,7 @@ return cars.filter(car =>
         (!year || car.year == year) &&
         (fuel === "fuel"||!fuel || car.fuel_type.toLowerCase() === fuel.toLowerCase()) &&
         (!model || car.model.toLowerCase().includes(model.toLowerCase()))
-    ).slice(0, limit || cars.length);
+    ).slice(0, limit || 10);
 
 }
 
